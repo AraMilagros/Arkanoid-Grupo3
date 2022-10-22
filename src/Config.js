@@ -12,6 +12,7 @@ function Config() {
 
         var config = {
             type: Phaser.AUTO,
+            autoCenter:Phaser.Scale.CENTER_HORIZONTALLY,
             width: 900,
             height: 600,
             physics: {
