@@ -7,7 +7,9 @@ export default class Principal extends Phaser.Scene{
     cursors = null;
     // particles = null;
     // emitter = null;
-
+    scoreText= null; //se definieron las variables para el score
+    score = 0; //se inicializa en 0
+    
     constructor(){
     //Esto servira para que en caso de perder, y se quiera volver a jugar, pueda ser llamado por su key, en este caso 'Principal'
         super({key: 'Principal'});
@@ -59,7 +61,7 @@ export default class Principal extends Phaser.Scene{
 
         //Esto permite que detecte las colisiones en los limites del lienzo, menos en el limite de abajo, es decir bajo la barra
         this.physics.world.setBoundsCollision(true, true, true, false);
-
+           
         //se crean los bloques
         let bloqueDistanciaHorizontal = 30;//distancia horizontal entre bloques
         let bloqueDistanciaVertical = 50;//distancia Vertical entre bloques
@@ -128,15 +130,16 @@ export default class Principal extends Phaser.Scene{
         this.physics.add.collider(this.ball, this.barraLeft, this.reboteL, null, this);
         //this.physics.add.collider(this.ball, this.bloques);
         //this.physics.add.collider(this.ball, this.bricks, this.impacto, null, this);
-
-        //Detecta una colicion entre los elementos pasados como argumentos
-        this.physics.add.collider(this.ball, this.bloque, this.impacto, null, this);
-        //Permite detectar las teclas para poder añadirle movimiento al player
-        this.cursors = this.input.keyboard.createCursorKeys();
-
-        
+       //Detecta una colicion entre los elementos pasados como argumentos
+        this.physics.add.collider(this.ball, this.bloque, this.impacto, null, this);//impacto tiene la colision con los bloques y tambien el score
+       //Permite detectar las teclas para poder añadirle movimiento al player
+        this.cursors = this.input.keyboard.createCursorKeys(); 
+        this.scoreText = this.add.text(16, 8, 'score: 0', { fontSize: '28px', fill: '#FFFFFF' }); //Esto sera el score
         // hace que siga a la pelota
         this.emitter.startFollow(this.ball);
+        
+        
+        
     }
 
     // funcion donde interacturan la barra y la pelota
@@ -217,6 +220,8 @@ export default class Principal extends Phaser.Scene{
     //cuando la pelota impacta con un bloque hace que este desaparezca
     impacto(ball, brick){
         brick.disableBody(true, true);
+        this.score += 10; //al impactar se suma de 10 en 10
+        this.scoreText.setText('Score: ' + this.score); //se setea el score
     }
 
     gameOver(){
