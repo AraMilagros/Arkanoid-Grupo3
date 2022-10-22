@@ -222,10 +222,13 @@ export default class Principal extends Phaser.Scene{
         brick.disableBody(true, true);
         this.score += 10; //al impactar se suma de 10 en 10
         this.scoreText.setText('Score: ' + this.score); //se setea el score
+        
     }
 
     gameOver(){
         //Se llama la siguiente escena que muestra que se perdio
-        this.scene.start('GameOver');
+        if(this.scene.start('GameOver')){ //con esto el score al perder se reinicia y se pone en 0, porque se acumulaba al perder.
+            this.score = 0;
+        }
     }
 }
