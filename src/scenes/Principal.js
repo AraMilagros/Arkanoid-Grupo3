@@ -5,7 +5,7 @@ export default class Principal extends Phaser.Scene{
     barraLeft = null;
     ball = null;
     cursors = null;
-    // particles = null;
+    particles = null;
     // emitter = null;
     scoreText= null; //se definieron las variables para el score
     score = 0; //se inicializa en 0
@@ -31,7 +31,7 @@ export default class Principal extends Phaser.Scene{
         this.load.image('bloqueRosa', 'img/bloqueRosa.png');
 
         //se carga la imagen de particulas
-        //this.load.image("particle", "img/particle.png");
+        this.load.image("particle", "img/particle.png");
 
     }
 
@@ -107,12 +107,6 @@ export default class Principal extends Phaser.Scene{
 
         //se agrega la pelota dandole fisicas y pasandole como posicion x un random entre 0-800, posicion y 230 y seteando su tamaño
         this.ball = this.physics.add.image(Phaser.Math.Between(0, 800), 300, 'ball').setScale(.3);
-//conflicto comentado
-        //se agrega la pelota dandole fisicas ,la posicion arriba de la barra y seteando su tamaño
-        //this.ball = this.physics.add.image(460, 510, 'ball').setScale(.3);
-        //se agrega un estado a la pelota que permite saber si esta "pegada" a la barra al iniciar el juego
-        //this.ball.setData('pegada',true);
-
         //permite que ball rebote al colisionar con otro elemento
         this.ball.setBounce(1);
         this.ball.setCollideWorldBounds(true);//permite que no se salga del lienzo
@@ -120,16 +114,15 @@ export default class Principal extends Phaser.Scene{
         this.physics.add.collider(this.ball,this.barra,this.impactoBarra,null,this);
         
 
-        let velocity = 100 * Phaser.Math.Between(1.3,2);//esto permitira variar la direccion entre rebotes
-        if(Phaser.Math.Between(0,10)>5){
-            velocity = 0 -velocity;
-        }
-        this.ball.setVelocity(velocity, 10);//Aqui se setea la velocidad de ball, velocity es x, 10 es y
+        // let velocity = 100 * Phaser.Math.Between(1.3,2);//esto permitira variar la direccion entre rebotes
+        // if(Phaser.Math.Between(0,10)>5){
+        //     velocity = 0 -velocity;
+        // }
+        // this.ball.setVelocity(velocity, 10);//Aqui se setea la velocidad de ball, velocity es x, 10 es y
         //Detecta una colicion entre los elementos pasados como argumentos y realiza el rebote correspondientes
         this.physics.add.collider(this.ball, this.barra, this.reboteR, null, this);
         this.physics.add.collider(this.ball, this.barraLeft, this.reboteL, null, this);
-        //this.physics.add.collider(this.ball, this.bloques);
-        //this.physics.add.collider(this.ball, this.bricks, this.impacto, null, this);
+
        //Detecta una colicion entre los elementos pasados como argumentos
         this.physics.add.collider(this.ball, this.bloque, this.impacto, null, this);//impacto tiene la colision con los bloques y tambien el score
        //Permite detectar las teclas para poder añadirle movimiento al player
@@ -137,9 +130,7 @@ export default class Principal extends Phaser.Scene{
         this.scoreText = this.add.text(16, 8, 'score: 0', { fontSize: '28px', fill: '#FFFFFF' }); //Esto sera el score
         // hace que siga a la pelota
         this.emitter.startFollow(this.ball);
-        
-        
-        
+ 
     }
 
     // funcion donde interacturan la barra y la pelota
@@ -180,33 +171,6 @@ export default class Principal extends Phaser.Scene{
         //En caso de que no se presione ninguna de las teclase, la barra permanecera quieta
             this.barra.setVelocityX(0);
             this.barraLeft.setVelocityX(0);
-//conflicto comentado
-       /* //Al detectar que se presiona la tecla left, se movera la barra en x hacia la izq
-        if(this.cursors.left.isDown){
-            this.barra.setVelocityX(-300);
-            if(this.ball.getData('pegada')){
-                this.ball.setVelocityX(-300);
-            }
-        //Al detectar que se presiona la tecla right, se movera la barra en x hacia la der
-        }else if(this.cursors.right.isDown){
-            this.barra.setVelocityX(300);
-            if(this.ball.getData('pegada')){
-                this.ball.setVelocityX(300);
-            }
-        }else{
-        //En caso de que no se presione ninguna de las teclase, la barra permanecera quieta
-            this.barra.setVelocityX(0);
-            if(this.ball.getData('pegada')){
-                this.ball.setVelocityX(0);
-            }
-        }
-        //Si se presiona la barra espaciadora o la tecla para arriba la pelota se lanza hacia arriba
-        if(this.cursors.space.isDown || this.cursors.up.isDown ){
-            if(this.ball.getData('pegada')){
-                this.ball.setVelocity(Phaser.Math.Between(-80,80),-300);
-            }
-            this.ball.setData('pegada',false);*/
-
         }
     }    
     //hace que la pelota siempre rebote hacia la izquierda
