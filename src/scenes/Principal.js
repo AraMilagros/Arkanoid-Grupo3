@@ -2,7 +2,6 @@ import Phaser from "phaser";
 
 export default class Principal extends Phaser.Scene{
     barra = null;
-    barraLeft = null;
     ball = null;
     cursors = null;
     particles = null;
@@ -53,8 +52,8 @@ export default class Principal extends Phaser.Scene{
                 start: 1,
                 end: 0
             },
-            // frecuencia: una particula cada 100 milisegundos
-            frequency: 100,
+            // frecuencia: una particula cada 80 milisegundos
+            frequency: 80,
             // tiempo de vida: 1 segundo
             lifespan: 500
         });
@@ -92,45 +91,23 @@ export default class Principal extends Phaser.Scene{
         });*/
 
         //se agrega la barra dandole fsicas y seteando su tamaño y que sea inamovible, es decir que al detectar una colision no reaccione al impacto
+        this.barra = this.physics.add.image(450, 550, 'barra').setScale(.3).setImmovable();
 
-        this.barra = this.physics.add.image(400, 550, 'barra').setScale(.15).setImmovable();
-
-        //this.barra = this.physics.add.image(460, 550, 'barra').setScale(.3).setImmovable();
-
-        this.barra.body.allowGravity = false;//Esto permite que no le afecte la gravedad
-        //this.barra.setCollideWorldBounds(true);//esto permite que no se salga del lienzo en sus laterales
-
-        this.barraLeft = this.physics.add.image(321, 550, 'barra').setScale(.15).setImmovable();
-        this.barraLeft.body.allowGravity = false;//Esto permite que no le afecte la gravedad
-        //this.barraLeft.setCollideWorldBounds(true);//esto permite que no se salga del lienzo en sus laterales
-
-
-        //se agrega la pelota dandole fisicas y pasandole como posicion x un random entre 0-800, posicion y 230 y seteando su tamaño
-        this.ball = this.physics.add.image(Phaser.Math.Between(0, 800), 300, 'ball').setScale(.3);
+        //se agrega la pelota dandole fisicas ,la posicion arriba de la barra y seteando su tamaño
+        this.ball = this.physics.add.image(450, 520, 'ball').setScale(.3);
         //permite que ball rebote al colisionar con otro elemento
         this.ball.setBounce(1);
         this.ball.setCollideWorldBounds(true);//permite que no se salga del lienzo
+        //se agrega un estado a la pelota que permite saber si esta "pegada" a la barra al iniciar el juego
+        this.ball.setData('pegada',true);
         //Define que objetos pueden colisionar
         this.physics.add.collider(this.ball,this.barra,this.impactoBarra,null,this);
         
-
-        // let velocity = 100 * Phaser.Math.Between(1.3,2);//esto permitira variar la direccion entre rebotes
-        // if(Phaser.Math.Between(0,10)>5){
-        //     velocity = 0 -velocity;
-        // }
-        // this.ball.setVelocity(velocity, 10);//Aqui se setea la velocidad de ball, velocity es x, 10 es y
-        //Detecta una colicion entre los elementos pasados como argumentos y realiza el rebote correspondientes
-        this.physics.add.collider(this.ball, this.barra, this.reboteR, null, this);
-        this.physics.add.collider(this.ball, this.barraLeft, this.reboteL, null, this);
-
        //Detecta una colicion entre los elementos pasados como argumentos
         this.physics.add.collider(this.ball, this.bloque, this.impacto, null, this);//impacto tiene la colision con los bloques y tambien el score
        //Permite detectar las teclas para poder añadirle movimiento al player
         this.cursors = this.input.keyboard.createCursorKeys(); 
         this.scoreText = this.add.text(16, 8, 'score: 0', { fontSize: '28px', fill: '#FFFFFF' }); //Esto sera el score
-        // hace que siga a la pelota
-        this.emitter.startFollow(this.ball);
- 
     }
 
     // funcion donde interacturan la barra y la pelota
@@ -158,29 +135,32 @@ export default class Principal extends Phaser.Scene{
     }
 
     moveBarra(){
-
-        //Al detectar que se presiona la tecla left, se movera la barra en x hacia la izq, mientras no pase el límite indicado
-        if(this.cursors.left.isDown && this.barra.x >50 ){
+        //Al detectar que se presiona la tecla left, se movera la barra en x hacia la izq
+        if(this.cursors.left.isDown && this.barra.x>90){
             this.barra.setVelocityX(-600);
-            this.barraLeft.setVelocityX(-600);
-        //Al detectar que se presiona la tecla right, se movera la barra en x hacia la der, mientras no pase el límite indicado
-        }else if(this.cursors.right.isDown && this.barraLeft.x <850 ){
+            if(this.ball.getData('pegada')) this.ball.setVelocityX(-600);
+        //Al detectar que se presiona la tecla right, se movera la barra en x hacia la der
+        }else if(this.cursors.right.isDown && this.barra.x<810){
             this.barra.setVelocityX(600);
-            this.barraLeft.setVelocityX(600);
+            if(this.ball.getData('pegada')) this.ball.setVelocityX(600);
+
         }else{
         //En caso de que no se presione ninguna de las teclase, la barra permanecera quieta
             this.barra.setVelocityX(0);
-            this.barraLeft.setVelocityX(0);
+            if(this.ball.getData('pegada')){
+                this.ball.setVelocityX(0);
+            }
         }
-    }    
-    //hace que la pelota siempre rebote hacia la izquierda
-    reboteL(){
-        this.ball.setVelocity(-200,-700);
-    }
-    //hace que la pelota siempre rebote hacia la derecha
-    reboteR(){
-        this.ball.setVelocity(200,-700);
-    }
+        //Si se presiona la barra espaciadora o la tecla para arriba la pelota se lanza hacia arriba
+        if(this.cursors.space.isDown || this.cursors.up.isDown && this.ball.getData('pegada') ){
+            //se lanza la pelota hacia arriba
+            this.ball.setVelocity(Phaser.Math.Between(-80,80),-580);
+            // empieza a emitir particulas que siguen a la pelota
+            this.emitter.startFollow(this.ball);
+            this.ball.setData('pegada',false);
+        }
+    }     
+
     //cuando la pelota impacta con un bloque hace que este desaparezca
     impacto(ball, brick){
         brick.disableBody(true, true);
