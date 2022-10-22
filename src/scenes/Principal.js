@@ -1,13 +1,12 @@
 import Phaser from "phaser";
+import Barra from '../gameObjects/Barra';
+import Ball from '../gameObjects/Ball';
+import Bloque from '../gameObjects/Bloque';
 
 export default class Principal extends Phaser.Scene{
     barra = null;
     ball = null;
-    cursors = null;
-    particles = null;
-    // emitter = null;
-    scoreText= null; //se definieron las variables para el score
-    score = 0; //se inicializa en 0
+    bloque = null;
     
     constructor(){
     //Esto servira para que en caso de perder, y se quiera volver a jugar, pueda ser llamado por su key, en este caso 'Principal'
@@ -35,138 +34,39 @@ export default class Principal extends Phaser.Scene{
     }
 
     create(){
+        //Se agrega una imagen para fondo
         this.add.image(450,300,'background' );
-        // se crea el sistema de particulas usando la imagen particle. Se crea antes para que esté detras de la pelota
-        var particles = this.add.particles("particle");
-        //se configura la emision en forma de cola
-        this.emitter = particles.createEmitter({
-            // la particula no se mueve
-            speed: 0, 
-            // escala: del 0.25 a 0.
-            scale: {
-                start: 0.25,
-                end: 0
-            },
-            // opacidad: de opaco a transparente
-            alpha: {
-                start: 1,
-                end: 0
-            },
-            // frecuencia: una particula cada 80 milisegundos
-            frequency: 80,
-            // tiempo de vida: 1 segundo
-            lifespan: 500
-        });
-
-        //Esto permite que detecte las colisiones en los limites del lienzo, menos en el limite de abajo, es decir bajo la barra
+        //Esto permite que detecte las colisiones en los limites del lienzo, menos abajo
+        // es decir que si la barra no alcanza la ball, éste desaparecera del lienzo
         this.physics.world.setBoundsCollision(true, true, true, false);
-           
-        //se crean los bloques
-        let bloqueDistanciaHorizontal = 30;//distancia horizontal entre bloques
-        let bloqueDistanciaVertical = 50;//distancia Vertical entre bloques
-        this.bloque = this.physics.add.staticGroup();
-        for(let i=0; i<15; i++){
-            //se crea una columna con un bloque de cada color
-            this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical, 'bloqueRojo');
-            this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical + 50, 'bloqueRosa');
-            this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical + 100, 'bloqueVerde');
-            this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical + 150, 'bloqueAzul');
-            this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical + 200, 'bloqueAmarillo');
-            bloqueDistanciaHorizontal = bloqueDistanciaHorizontal +60;
-        }
         
-        /*//Otra forma de cargar los bloques
-        this.bloques = this.physics.add.staticGroup();
-        this.bricks = this.physics.add.staticGroup({
-            key: ['bloqueRojo', 'bloqueAmarillo', 'bloqueVerde', 'bloqueAzul', 'bloqueRosa'],
-            frameQuantity: 15,
-            gridAlign:{
-                width: 15,
-                height: 5,
-                cellHeight: 50,
-                cellWidth: 60,
-                x: 30,
-                y: 50
-            }
-        });*/
+        //----creacion de ball
+        this.ball = new Ball(this);//se crea una instancia de la clase Ball, pasandole de parametro esta escena
+        this.ball.create();//se llama la funcion que creara el ball
 
-        //se agrega la barra dandole fsicas y seteando su tamaño y que sea inamovible, es decir que al detectar una colision no reaccione al impacto
-        this.barra = this.physics.add.image(450, 550, 'barra').setScale(.3).setImmovable();
-
-        //se agrega la pelota dandole fisicas ,la posicion arriba de la barra y seteando su tamaño
-        this.ball = this.physics.add.image(450, 520, 'ball').setScale(.3);
-        //permite que ball rebote al colisionar con otro elemento
-        this.ball.setBounce(1);
-        this.ball.setCollideWorldBounds(true);//permite que no se salga del lienzo
-        //se agrega un estado a la pelota que permite saber si esta "pegada" a la barra al iniciar el juego
-        this.ball.setData('pegada',true);
-        //Define que objetos pueden colisionar
-        this.physics.add.collider(this.ball,this.barra,this.impactoBarra,null,this);
+        //----Creacion de las barras
+        this.barra = new Barra(this);//Se instancia la clase Barra y se pasa esta escena
+        this.barra.create();//funcion que creara la barra y se añadira a esta escena
+        //Esto permitira que la barra pueda detectar la colision con ball
+        //la cual se la pasa de parametro, mediante una funcion que retorna la ball
+        this.barra.detectedCollider(this.ball.returnBall());
         
-       //Detecta una colicion entre los elementos pasados como argumentos
-        this.physics.add.collider(this.ball, this.bloque, this.impacto, null, this);//impacto tiene la colision con los bloques y tambien el score
-       //Permite detectar las teclas para poder añadirle movimiento al player
-        this.cursors = this.input.keyboard.createCursorKeys(); 
-        this.scoreText = this.add.text(16, 8, 'score: 0', { fontSize: '28px', fill: '#FFFFFF' }); //Esto sera el score
-    }
-
-    // funcion donde interacturan la barra y la pelota
-    impactoBarra(ball,barra){
-        //variable que sirve para saber si la pelota toca el lado izq o der de la barra
-        let impactoRelativo=ball.x-barra.x;
-        // se verifica que la posicion relativa no se mayor a 60 ni menor a -60 para que la pelota no tome mucha velocidad
-        if(impactoRelativo>60){
-            impactoRelativo=60;
-        }
-        if(impactoRelativo<-60){
-            impactoRelativo=-60;
-        }
-        ball.setVelocityX(8*impactoRelativo);
+        //----Creacion de los bloques
+        this.bloque = new Bloque(this);//se instancia los bloques, pasando esta escena
+        this.bloque.create();//funcion para crear los bloques y ser visibles en esta escena
+        //Es igual que en barra, permitira detectar la colision entre los bloques y ball
+        this.bloque.detectedCollision(this.ball.returnBall());
     }
 
     update(){
-        this.moveBarra();
-
+        //Funcion de la clase Barra que permite su movimiento mediante el teclado
+        //y se pasa ball para detectar el comienzo del juego. Ball comienza pegada a la barra  y recien al presionar space, el juego comenzara
+        this.barra.move(this.ball.returnBall());
         //En caso de que no se logre alcazar ball y caiga, se terminara el jeugo
-        if(this.ball.y > 600){
-            console.log("fin");
+        if(this.ball.directionY() > 600){
+            // console.log("fin");
             this.gameOver();
         }
-    }
-
-    moveBarra(){
-        //Al detectar que se presiona la tecla left, se movera la barra en x hacia la izq
-        if(this.cursors.left.isDown && this.barra.x>90){
-            this.barra.setVelocityX(-600);
-            if(this.ball.getData('pegada')) this.ball.setVelocityX(-600);
-        //Al detectar que se presiona la tecla right, se movera la barra en x hacia la der
-        }else if(this.cursors.right.isDown && this.barra.x<810){
-            this.barra.setVelocityX(600);
-            if(this.ball.getData('pegada')) this.ball.setVelocityX(600);
-
-        }else{
-        //En caso de que no se presione ninguna de las teclase, la barra permanecera quieta
-            this.barra.setVelocityX(0);
-            if(this.ball.getData('pegada')){
-                this.ball.setVelocityX(0);
-            }
-        }
-        //Si se presiona la barra espaciadora o la tecla para arriba la pelota se lanza hacia arriba
-        if(this.cursors.space.isDown || this.cursors.up.isDown && this.ball.getData('pegada') ){
-            //se lanza la pelota hacia arriba
-            this.ball.setVelocity(Phaser.Math.Between(-80,80),-580);
-            // empieza a emitir particulas que siguen a la pelota
-            this.emitter.startFollow(this.ball);
-            this.ball.setData('pegada',false);
-        }
-    }     
-
-    //cuando la pelota impacta con un bloque hace que este desaparezca
-    impacto(ball, brick){
-        brick.disableBody(true, true);
-        this.score += 10; //al impactar se suma de 10 en 10
-        this.scoreText.setText('Score: ' + this.score); //se setea el score
-        
     }
 
     gameOver(){
