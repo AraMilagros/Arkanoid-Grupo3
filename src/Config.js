@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Principal from './scenes/Principal';
 // import Winner from './scenes/Winner';
 import GameOver from './scenes/GameOver';
-
+import Menu from './scenes/Menu';
 import Phaser from 'phaser';
 
 function Config() {
@@ -22,7 +22,7 @@ function Config() {
                     debug: false
                 }
             },
-            scene:[Principal, GameOver]
+            scene:[Menu, Principal, GameOver]
         };
 
         var game = new Phaser.Game(config);
