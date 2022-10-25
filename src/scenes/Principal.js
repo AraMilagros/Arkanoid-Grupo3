@@ -7,7 +7,6 @@ export default class Principal extends Phaser.Scene{
     barra = null;
     ball = null;
     bloque = null;
-    
     constructor(){
     //Esto servira para que en caso de perder, y se quiera volver a jugar, pueda ser llamado por su key, en este caso 'Principal'
         super({key: 'Principal'});
@@ -27,10 +26,9 @@ export default class Principal extends Phaser.Scene{
         this.load.image('bloqueAmarillo', 'img/bloqueAmarillo.png');
         this.load.image('bloqueAzul', 'img/bloqueAzul.png');
         this.load.image('bloqueRosa', 'img/bloqueRosa.png');
-
         //se carga la imagen de particulas
         this.load.image("particle", "img/particle.png");
-
+        this.load.image('particleDestruction', 'img/particleDestruction.png');
     }
 
     create(){
