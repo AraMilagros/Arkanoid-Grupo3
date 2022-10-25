@@ -14,12 +14,14 @@ import Bloque from '../gameObjects/Bloque';
  *      en preload: this.load.audio('choque', ballBlockImpact);
  */
 import ballBlockImpact from '../assets/sounds/ballBlockImpact.wav';
+import gameMusic from '../assets/sounds/gameMusic.mp3';
 
 export default class Principal extends Phaser.Scene{
     barra = null;
     ball = null;
     bloque = null;
     sonido = null;
+    musicGame = null;
     constructor(){
     //Esto servira para que en caso de perder, y se quiera volver a jugar, pueda ser llamado por su key, en este caso 'Principal'
         super({key: 'Principal'});
@@ -44,6 +46,7 @@ export default class Principal extends Phaser.Scene{
         this.load.image('particleDestruction', 'img/particleDestruction.png');
         //sonido
         this.load.audio('choque', ballBlockImpact);
+        this.load.audio('music', gameMusic);
     }
 
     create(){
@@ -71,6 +74,9 @@ export default class Principal extends Phaser.Scene{
         this.bloque.detectedCollision(this.ball.returnBall());
         //se agrega el sonido en caso de que ball choque a un bloque
         this.sonido = this.sound.add('choque');//Esto se llama en Bloque.js cuando se detecta un impacto
+        this.sound.stopAll();
+        this.musicGame = this.sound.add('music');
+        this.musicGame.play();
     }
 
     update(){
@@ -91,9 +97,11 @@ export default class Principal extends Phaser.Scene{
     gameOver(){
         //Se llama la siguiente escena que muestra que se perdio
         this.scene.start('GameOver');
+        this.musicGame.stop();
     }
     winPlayer(){
         //se llama a la escena winner para indicar que gano
         this.scene.start('Winner');
+        this.musicGame.stop();
     }
 }
