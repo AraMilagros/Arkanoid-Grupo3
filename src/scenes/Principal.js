@@ -3,10 +3,23 @@ import Barra from '../gameObjects/Barra';
 import Ball from '../gameObjects/Ball';
 import Bloque from '../gameObjects/Bloque';
 
+//El audio al estar en una carpeta dentro de src, para ser reconocido tiene que ser importado de esta manera
+//Despues en preload se tendra que pasar 'ballBlockImpact' para ser cargado en vez del url de su ubicacion
+// -Otro modo de cargar el audio es pasar la carpeta de sound a la carpeta public y  llamarlo como de costumbre
+/**
+ * si los sonidos estan en carpeta public:
+ *      en preload: this.load.audio('choque', 'sounds/ballBlockImpact.wav');
+ * si los sonidos estan en carpeta src:
+ *      importar primero : import ballBlockImpact from '../assets/sounds/ballBlockImpact.wav';
+ *      en preload: this.load.audio('choque', ballBlockImpact);
+ */
+import ballBlockImpact from '../assets/sounds/ballBlockImpact.wav';
+
 export default class Principal extends Phaser.Scene{
     barra = null;
     ball = null;
     bloque = null;
+    sonido = null;
     constructor(){
     //Esto servira para que en caso de perder, y se quiera volver a jugar, pueda ser llamado por su key, en este caso 'Principal'
         super({key: 'Principal'});
@@ -29,6 +42,8 @@ export default class Principal extends Phaser.Scene{
         //se carga la imagen de particulas
         this.load.image("particle", "img/particle.png");
         this.load.image('particleDestruction', 'img/particleDestruction.png');
+        //sonido
+        this.load.audio('choque', ballBlockImpact);
     }
 
     create(){
@@ -54,6 +69,8 @@ export default class Principal extends Phaser.Scene{
         this.bloque.create();//funcion para crear los bloques y ser visibles en esta escena
         //Es igual que en barra, permitira detectar la colision entre los bloques y ball
         this.bloque.detectedCollision(this.ball.returnBall());
+        //se agrega el sonido en caso de que ball choque a un bloque
+        this.sonido = this.sound.add('choque');//Esto se llama en Bloque.js cuando se detecta un impacto
     }
 
     update(){
@@ -69,8 +86,6 @@ export default class Principal extends Phaser.Scene{
 
     gameOver(){
         //Se llama la siguiente escena que muestra que se perdio
-        if(this.scene.start('GameOver')){ //con esto el score al perder se reinicia y se pone en 0, porque se acumulaba al perder.
-            this.score = 0;
-        }
+        this.scene.start('GameOver');
     }
 }
