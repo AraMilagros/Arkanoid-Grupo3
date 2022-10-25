@@ -4,6 +4,7 @@ import Principal from './scenes/Principal';
 import GameOver from './scenes/GameOver';
 import Menu from './scenes/Menu';
 import Phaser from 'phaser';
+import Winner from './scenes/Winner';
 
 function Config() {
     const [listo, setListo] = useState(true);
@@ -22,7 +23,7 @@ function Config() {
                     debug: false
                 }
             },
-            scene:[Menu, Principal, GameOver]
+            scene:[Menu, Principal,GameOver,Winner]
         };
 
         var game = new Phaser.Game(config);
