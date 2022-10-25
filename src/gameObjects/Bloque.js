@@ -10,8 +10,6 @@ export default class Bloque extends Phaser.GameObjects.Sprite{
         this.scenePadre = scene;
         // console.log("constructor de bloques");
     }
-
-
     create(){
         let bloqueDistanciaHorizontal = 30;//distancia horizontal entre bloques
         let bloqueDistanciaVertical = 50;//distancia Vertical entre bloques
@@ -26,6 +24,7 @@ export default class Bloque extends Phaser.GameObjects.Sprite{
             bloqueDistanciaHorizontal = bloqueDistanciaHorizontal +60;
         }
         this.scenePadre.scoreText = this.scenePadre.add.text(16, 8, 'score: 0', { fontSize: '28px', fill: '#FFFFFF' }); //Esto sera el score
+        
         /*//Otra forma de cargar los bloques
 
         //NOTA: ESTO SE COPIO TAL CUAL ESTABA EN PRINCIPAL.JS, EN CASO DE QUERER USARLO, QUIZAS SE TENGAN QUE HACER ALGUNOS CAMBIOS POR ESTAR EN UN ARCHIVO APARTE
@@ -71,5 +70,8 @@ export default class Bloque extends Phaser.GameObjects.Sprite{
         //sonido al chocar con los bloques
         // Como sonido está declarado e inicalizado en Principal, se utiliza scenePadre para acceder a la variable
         this.scenePadre.sonido.play();
+    }
+    countBlocks(){
+        return this.bloque.countActive();
     }
 }

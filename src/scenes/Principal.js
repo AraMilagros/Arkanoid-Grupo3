@@ -82,10 +82,18 @@ export default class Principal extends Phaser.Scene{
             // console.log("fin");
             this.gameOver();
         }
+        //verifica en caso de que el numero de bloques sea 0 y si lo es el jugador gana
+        if(this.bloque.countBlocks()===0){
+            this.winPlayer();
+        }
     }
 
     gameOver(){
         //Se llama la siguiente escena que muestra que se perdio
         this.scene.start('GameOver');
+    }
+    winPlayer(){
+        //se llama a la escena winner para indicar que gano
+        this.scene.start('Winner');
     }
 }
