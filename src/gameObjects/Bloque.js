@@ -2,6 +2,8 @@ export default class Bloque extends Phaser.GameObjects.Sprite{
     
     scoreText = null;
     score = 0;
+    emitterParticle = null;
+    blockParticles = null;
     constructor(scene){
         super(scene);
         this.scenePadre = scene;
@@ -40,19 +42,29 @@ export default class Bloque extends Phaser.GameObjects.Sprite{
                 y: 50
             }
         });*/
-
+        this.createParticles();
     }
 
+    createParticles(){
+        this.blockParticles = this.scenePadre.add.particles('particleDestruction')
+        this.emitterParticle = this.blockParticles.createEmitter({
+            speed: 200,
+            lifespan: 200,
+            blendMode: 'ADD',
+            scale: { start: 0.25, end: 0 },
+            on: false,
+        })
+    }
 
     detectedCollision(ball){
         //Detecta las colisiones de los bloques con ball.. y en caso de existir, se llamara una funcion 
         this.scenePadre.physics.add.collider(ball, this.bloque, this.impacto, null, this);
     }
-
-    
     //cuando la pelota impacta con un bloque hace que este desaparezca
-    impacto(ball, brick){
+    impacto(ball, brick,){
         brick.disableBody(true, true);
+        //Crea las particulas al colicionar ball con el bloque
+        this.blockParticles.emitParticleAt(brick.x, brick.y, 50);
         this.score += 10; //al impactar se suma de 10 en 10
         this.scenePadre.scoreText.setText('Score: ' + this.score); //se setea el score
     }
