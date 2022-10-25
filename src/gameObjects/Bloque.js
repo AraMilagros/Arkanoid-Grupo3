@@ -4,6 +4,7 @@ export default class Bloque extends Phaser.GameObjects.Sprite{
     score = 0;
     emitterParticle = null;
     blockParticles = null;
+    // sonido = null
     constructor(scene){
         super(scene);
         this.scenePadre = scene;
@@ -67,5 +68,8 @@ export default class Bloque extends Phaser.GameObjects.Sprite{
         this.blockParticles.emitParticleAt(brick.x, brick.y, 50);
         this.score += 10; //al impactar se suma de 10 en 10
         this.scenePadre.scoreText.setText('Score: ' + this.score); //se setea el score
+        //sonido al chocar con los bloques
+        // Como sonido está declarado e inicalizado en Principal, se utiliza scenePadre para acceder a la variable
+        this.scenePadre.sonido.play();
     }
 }
