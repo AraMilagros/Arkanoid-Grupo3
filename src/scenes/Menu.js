@@ -17,7 +17,7 @@ export default class Menu extends Phaser.Scene{
 
     create(){
         this.musicMenu = this.sound.add('menuMusic');
-        this.musicMenu.play();
+        this.musicMenu.play({loop: true, volume: 0.5});
         this.add.image(450,200,'Menu').setScale(.3); //se agrega a la imagen y se modifica el tamaño
         this.restartButton.create();//Aqui se llama la funcion para mostrar el button en la escena
     }

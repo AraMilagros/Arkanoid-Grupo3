@@ -79,9 +79,7 @@ export default class Principal extends Phaser.Scene{
         this.impactoBar = this.sound.add('impactoBar');// sonido que se llama en Barra.js cuando detecta un impacto
         this.sound.stopAll();
         this.musicGame = this.sound.add('music');
-        this.musicGame.setLoop(true);// permite que la musica se reproduzca en bucle
-        this.musicGame.setVolume(0.5)
-        this.musicGame.play();
+        this.musicGame.play({loop: true, volume: 0.5});
     }
 
     update(){
