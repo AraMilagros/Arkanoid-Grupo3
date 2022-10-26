@@ -20,6 +20,7 @@ export default class Barra extends Phaser.GameObjects.Sprite{
     }
 
     impactoBarra(ball){
+        if(!ball.getData('pegada')) this.scenePadre.impactoBar.play();
         //variable que sirve para saber si la pelota toca el lado izq o der de la barra
         let impacto = ball.x-this.barraIzq.x;
         // se verifica que la posicion relativa no se mayor a 60 ni menor a -60 para que la pelota no tome mucha velocidad
@@ -56,7 +57,7 @@ export default class Barra extends Phaser.GameObjects.Sprite{
 
         if(this.cursors.space.isDown || this.cursors.up.isDown && ball.getData('pegada') ){
             //se lanza la pelota hacia arriba
-            ball.setVelocity(Phaser.Math.Between(-80,80),-580);
+            ball.setVelocity(Phaser.Math.Between(-80,80),-480);
             ball.setData('pegada',false);
             // console.log("entro por barra para ball");
         }
