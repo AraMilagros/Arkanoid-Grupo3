@@ -14,6 +14,7 @@ import Bloque from '../gameObjects/Bloque';
  *      en preload: this.load.audio('choque', ballBlockImpact);
  */
 import ballBlockImpact from '../assets/sounds/ballBlockImpact.wav';
+import ballBarImpact from '../assets/sounds/ballBarImpact.wav'
 import gameMusic from '../assets/sounds/gameMusic.mp3';
 
 export default class Principal extends Phaser.Scene{
@@ -46,6 +47,7 @@ export default class Principal extends Phaser.Scene{
         this.load.image('particleDestruction', 'img/particleDestruction.png');
         //sonido
         this.load.audio('choque', ballBlockImpact);
+        this.load.audio('impactoBar',ballBarImpact);
         this.load.audio('music', gameMusic);
     }
 
@@ -74,8 +76,11 @@ export default class Principal extends Phaser.Scene{
         this.bloque.detectedCollision(this.ball.returnBall());
         //se agrega el sonido en caso de que ball choque a un bloque
         this.sonido = this.sound.add('choque');//Esto se llama en Bloque.js cuando se detecta un impacto
+        this.impactoBar = this.sound.add('impactoBar');// sonido que se llama en Barra.js cuando detecta un impacto
         this.sound.stopAll();
         this.musicGame = this.sound.add('music');
+        this.musicGame.setLoop(true);// permite que la musica se reproduzca en bucle
+        this.musicGame.setVolume(0.5)
         this.musicGame.play();
     }
 
