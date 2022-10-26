@@ -24,7 +24,7 @@ export default class GameOver extends Phaser.Scene{
         this.restartButton.create();
         //Se agrega la imagen de 'game over' modificando su tamaño para hacerlo mas pequeño
         this.add.image(450, 150,'gameover').setScale(.5);
-        this.lose.play();
+        this.lose.play({volume: 0.5});
     }
 
 }

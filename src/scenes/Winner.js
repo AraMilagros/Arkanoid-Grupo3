@@ -22,6 +22,6 @@ export default class Winner extends Phaser.Scene{
         this.add.image(450, 230,'winner').setScale(2.0);
         //Se llama la funcion para mostrar el button en la escena
         this.restartButton.create();
-        this.win.play();
+        this.win.play({volume: 0.5});
     }
 }
