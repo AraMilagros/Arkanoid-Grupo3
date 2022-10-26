@@ -11,13 +11,13 @@ export class Button{
         //es un sprite del mismo button que simula estando y no presionado
         this.relatedScene.load.spritesheet('button',
             'img/button.png',
-            { frameWidth: 242, frameHeight: 136 }
+            { frameWidth: 240, frameHeight: 120 }
         );
     }
 
     create(){
         //Se agrega el sprite en la escena
-        this.start = this.relatedScene.add.sprite(450, 430, 'button').setInteractive().setScale(.6);
+        this.start = this.relatedScene.add.sprite(450, 450, 'button').setInteractive().setScale(.6);
 
         this.start.on('pointerover', ()=>{
         //Cuando el cursor este encima del button, cambiara al siguiente frame que simula que el button fue presionado
