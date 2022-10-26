@@ -11,7 +11,7 @@ export class Button1 {
         //es un sprite del mismo button1 que simula estando y no presionado
         this.relatedScene.load.spritesheet('button1',
             'img/N1button.png',
-            { frameWidth: 242, frameHeight: 136 }
+            { frameWidth: 240, frameHeight: 120 }
         );
 
     }
