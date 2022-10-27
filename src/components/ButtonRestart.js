@@ -30,8 +30,9 @@ export class ButtonRestart{
         });
 
         this.start.on('pointerdown', ()=>{
-            //Recien cuando se detecte un click encima del button, volvera a cargar la escena del juego
+            //Recien cuando se detecte un click encima del button, volvera a cargar la escena del ultimo nivel jugado.
             this.relatedScene.scene.start(level);
+            //acoto que no llegue a hacerlo.
         });
     }
 }

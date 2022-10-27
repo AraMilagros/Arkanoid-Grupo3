@@ -31,6 +31,7 @@ export default class GameOver extends Phaser.Scene{
         this.add.image(450, 150,'gameover').setScale(.5);
         this.lose.play({volume: 0.5});
     }
+    //Este metodo accede a una variable que compara y retorna en el caso de cada nivel.
     getLevel(){
         if(this.nivelGuardado ==1){
             return 'Level1';

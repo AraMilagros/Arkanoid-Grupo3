@@ -30,7 +30,7 @@ export class Button2{
        });
 
         this.start.on('pointerdown', ()=>{
-        //Recien cuando se detecte un click encima del button, ira al nivel 2.
+        //Recien cuando se detecte un click encima del button, ira al Nivel 2.
             this.relatedScene.scene.start('Level2');
         });
     }

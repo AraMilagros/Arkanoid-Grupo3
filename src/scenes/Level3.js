@@ -23,6 +23,7 @@ export default class Level3 extends Phaser.Scene{
     bloque = null;
     sonido = null;
     musicGame = null;
+    nivelActual = 3;
     constructor(){
     //Esto servira para que en caso de perder, y se quiera volver a jugar, pueda ser llamado por su key, en este caso 'Principal'
         super({key: 'Level3'});
@@ -108,6 +109,7 @@ export default class Level3 extends Phaser.Scene{
         this.scene.start('Winner');
         this.musicGame.stop();
     }
+     //Metodo que retorna la variable que contiene el nivel actual.
     LevelDataRestart(){
         return this.nivelActual;
     }
