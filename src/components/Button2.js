@@ -18,7 +18,7 @@ export class Button2{
 
     create(){
         //Se agrega el sprite en la escena
-        this.start = this.relatedScene.add.sprite(450, 450, 'button2').setInteractive().setScale(.6);
+        this.start = this.relatedScene.add.sprite(450, 435, 'button2').setInteractive().setScale(.6);
 
         this.start.on('pointerover', ()=>{
         //Cuando el cursor este encima del button, cambiara al siguiente frame que simula que el button fue presionado
@@ -31,7 +31,7 @@ export class Button2{
 
         this.start.on('pointerdown', ()=>{
         //Recien cuando se detecte un click encima del button, ira al nivel 2.
-            this.relatedScene.scene.start('#');
+            this.relatedScene.scene.start('Level2');
         });
     }
 }

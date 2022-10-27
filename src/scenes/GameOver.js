@@ -1,18 +1,19 @@
 import Phaser from "phaser";
-import { Button } from '../components/Button.js';
+import { ButtonRestart } from '../components/ButtonRestart.js';
 import { ButtonMenu } from "../components/ButtonMenu.js";
 import gameOver from '../assets/sounds/gameOver.mp3';
 export default class GameOver extends Phaser.Scene{
     lose = null;
+    nivelGuardado = 0;
     constructor(){
         //Se le da un key para facilitar su llamado
         super({key : 'GameOver'});
         //Se crea un obj de la clase Button que permitira volver a reiniciar el juego
             //se pasa de parametro esta escena que es donde se agregara el button
-        this.restartButton = new Button(this);
-        this.ButtonMenu = new ButtonMenu(this)
+        this.restartButton = new ButtonRestart(this);
+        this.ButtonMenu = new ButtonMenu(this);
+        
     }
-
     preload(){
         this.load.audio('gameOver', gameOver);
         //Se carga una imagen de 'Game over'
@@ -24,11 +25,19 @@ export default class GameOver extends Phaser.Scene{
     create(){
         this.lose = this.sound.add('gameOver');
         //Aqui se llama la funcion para mostrar el button en la escena
-        this.restartButton.create();
+        this.restartButton.create(this.getLevel());
         this.ButtonMenu.create()
         //Se agrega la imagen de 'game over' modificando su tamaño para hacerlo mas pequeño
         this.add.image(450, 150,'gameover').setScale(.5);
         this.lose.play({volume: 0.5});
     }
-
+    getLevel(){
+        if(this.nivelGuardado ==1){
+            return 'Level1';
+        }else if(this.nivelGuardado==2){
+            return 'Level2';
+        }else if(this.nivelGuardado==3){
+            return 'Level3';
+        } 
+    }
 }

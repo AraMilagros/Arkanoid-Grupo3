@@ -10,18 +10,38 @@ export default class Bloque extends Phaser.GameObjects.Sprite{
         this.scenePadre = scene;
         // console.log("constructor de bloques");
     }
-    create(){
+    create(level){
         let bloqueDistanciaHorizontal = 30;//distancia horizontal entre bloques
         let bloqueDistanciaVertical = 50;//distancia Vertical entre bloques
         this.bloque = this.scenePadre.physics.add.staticGroup();
-        for(let i=0; i<15; i++){
-            //se crea una columna con un bloque de cada color
-            this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical, 'bloqueRojo');
-            this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical + 50, 'bloqueRosa');
-            this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical + 100, 'bloqueVerde');
-            this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical + 150, 'bloqueAzul');
-            this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical + 200, 'bloqueAmarillo');
-            bloqueDistanciaHorizontal = bloqueDistanciaHorizontal +60;
+        switch(level){
+            case 1://en este caso se Crearan los Bloques para el nivel 1
+                for(let i=0; i<15; i++){
+                    //se crea una columna con un bloque de cada color
+                    this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical, 'bloqueRojo');
+                    bloqueDistanciaHorizontal = bloqueDistanciaHorizontal +60;
+                }
+            break;
+            case 2://en este caso se crearan los bloques para el nivel 2
+                for(let i=0; i<15; i++){
+                    //se crea una columna con un bloque de cada color
+                    this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical, 'bloqueRojo');
+                    this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical + 50, 'bloqueRosa');
+                    this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical + 100, 'bloqueVerde');
+                    bloqueDistanciaHorizontal = bloqueDistanciaHorizontal +60;
+                }
+            break;
+            case 3://en este caso se crearan los bloques para el nivel 3
+            for(let i=0; i<15; i++){
+                //se crea una columna con un bloque de cada color
+                this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical, 'bloqueRojo');
+                this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical + 50, 'bloqueRosa');
+                this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical + 100, 'bloqueVerde');
+                this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical + 150, 'bloqueAzul');
+                this.bloque.create(bloqueDistanciaHorizontal, bloqueDistanciaVertical + 200, 'bloqueAmarillo');
+                bloqueDistanciaHorizontal = bloqueDistanciaHorizontal +60;
+            }
+            break;
         }
         this.scenePadre.scoreText = this.scenePadre.add.text(16, 8, 'score: 0', { fontSize: '28px', fill: '#FFFFFF' }); //Esto sera el score
         

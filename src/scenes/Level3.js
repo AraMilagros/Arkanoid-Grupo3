@@ -17,7 +17,7 @@ import ballBlockImpact from '../assets/sounds/ballBlockImpact.wav';
 import ballBarImpact from '../assets/sounds/ballBarImpact.wav'
 import gameMusic from '../assets/sounds/gameMusic.mp3';
 
-export default class Principal extends Phaser.Scene{
+export default class Level3 extends Phaser.Scene{
     barra = null;
     ball = null;
     bloque = null;
@@ -25,16 +25,17 @@ export default class Principal extends Phaser.Scene{
     musicGame = null;
     constructor(){
     //Esto servira para que en caso de perder, y se quiera volver a jugar, pueda ser llamado por su key, en este caso 'Principal'
-        super({key: 'Principal'});
+        super({key: 'Level3'});
     }
 
     preload(){
         // se carga la imagen de fondo
-        this.load.image('background','img/background.png')
+        this.load.image('Fondo','img/Desert.jpg')
         //se carga la imagen de barra
         this.load.image('barra', 'img/barra.png');
         //se carga la imagen de ball
         this.load.image('ball', 'img/ball.png');
+        this.load.image('column','img/coluna.png')
 
         //se carga las imagenes de cada bloque
         this.load.image('bloqueRojo', 'img/bloqueRojo.png');
@@ -53,7 +54,7 @@ export default class Principal extends Phaser.Scene{
 
     create(){
         //Se agrega una imagen para fondo
-        this.add.image(450,300,'background' );
+        this.add.image(450,300,'Fondo' );
         //Esto permite que detecte las colisiones en los limites del lienzo, menos abajo
         // es decir que si la barra no alcanza la ball, éste desaparecera del lienzo
         this.physics.world.setBoundsCollision(true, true, true, false);
@@ -71,7 +72,7 @@ export default class Principal extends Phaser.Scene{
         
         //----Creacion de los bloques
         this.bloque = new Bloque(this);//se instancia los bloques, pasando esta escena
-        this.bloque.create();//funcion para crear los bloques y ser visibles en esta escena
+        this.bloque.create(3);//funcion para crear los bloques y ser visibles en esta escena
         //Es igual que en barra, permitira detectar la colision entre los bloques y ball
         this.bloque.detectedCollision(this.ball.returnBall());
         //se agrega el sonido en caso de que ball choque a un bloque
@@ -106,5 +107,8 @@ export default class Principal extends Phaser.Scene{
         //se llama a la escena winner para indicar que gano
         this.scene.start('Winner');
         this.musicGame.stop();
+    }
+    LevelDataRestart(){
+        return this.nivelActual;
     }
 }
