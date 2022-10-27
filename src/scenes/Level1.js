@@ -16,7 +16,7 @@ import Bloque from '../gameObjects/Bloque';
 import ballBlockImpact from '../assets/sounds/ballBlockImpact.wav';
 import ballBarImpact from '../assets/sounds/ballBarImpact.wav'
 import gameMusic from '../assets/sounds/gameMusic.mp3';
-import GameOver from "./GameOver";
+// import GameOver from "./GameOver";
 
 export default class Level1 extends Phaser.Scene{
     barra = null;
@@ -32,7 +32,7 @@ export default class Level1 extends Phaser.Scene{
     preload(){
         
         // se carga la imagen de fondo
-        this.load.image('Fondo','img/Mountains.jpg')
+        this.load.image('Fondo','img/Mountains.jpg');
         //se carga la imagen de barra
         this.load.image('barra', 'img/barra.png');
         //se carga la imagen de ball
@@ -111,7 +111,7 @@ export default class Level1 extends Phaser.Scene{
         this.musicGame.stop();
     }
     //Metodo que retorna la variable que contiene el nivel actual.
-    levelDataRestart(){
-        return this.nivelActual;
-    }
+    // levelDataRestart(){
+    //     return this.nivelActual;
+    // }
 }
