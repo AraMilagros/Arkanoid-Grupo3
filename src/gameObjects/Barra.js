@@ -57,7 +57,7 @@ export default class Barra extends Phaser.GameObjects.Sprite{
 
         if(this.cursors.space.isDown || this.cursors.up.isDown && ball.getData('pegada') ){
             //se lanza la pelota hacia arriba
-            ball.setVelocity(Phaser.Math.Between(-80,80),-480);
+            ball.setVelocity(Phaser.Math.Between(-80,80),-450);
             ball.setData('pegada',false);
             // console.log("entro por barra para ball");
         }

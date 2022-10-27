@@ -24,6 +24,15 @@ export default class Menu extends Phaser.Scene{
         this.sound.stopAll(); //Detiene todo sonido que haya para que no se sobrepongan entre ellos
         this.musicMenu = this.sound.add('menuMusic');
         this.musicMenu.play({loop: true, volume: 0.5});
+        //*** Este codigo solucionaba el warning del audio, pero con el boton "Iniciar Juego" ya no hace faltat/
+        // if (!this.sound.locked) {
+        //     this.musicMenu.play({loop: true, volume: 0.4})
+        // }
+        // else {
+        //     this.sound.once(Phaser.Sound.Events.UNLOCKED, () => {
+        //         this.musicMenu.play({loop: true, volume: 0.5})
+        //     })
+        // }
         this.add.image(450,150,'Menu').setScale(.3); //se agrega a la imagen y se modifica el tamaño
         this.lvl1Button.create();//Aqui se llama la funcion para mostrar el button1 en la escena
         this.lvl2Button2.create();//Aqui se llama la funcion para mostrar el button2 en la escena

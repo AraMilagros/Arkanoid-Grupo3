@@ -15,7 +15,7 @@ import Bloque from '../gameObjects/Bloque';
  */
 import ballBlockImpact from '../assets/sounds/ballBlockImpact.wav';
 import ballBarImpact from '../assets/sounds/ballBarImpact.wav'
-import gameMusic from '../assets/sounds/gameMusic.mp3';
+import gameMusic from '../assets/sounds/gameMusic3.mp3';
 
 export default class Level3 extends Phaser.Scene{
     barra = null;
@@ -81,7 +81,7 @@ export default class Level3 extends Phaser.Scene{
         this.impactoBar = this.sound.add('impactoBar');// sonido que se llama en Barra.js cuando detecta un impacto
         this.sound.stopAll();
         this.musicGame = this.sound.add('music');
-        this.musicGame.play({loop: true, volume: 0.5});
+        this.musicGame.play({loop: true, volume: 0.4});
     }
 
     update(){

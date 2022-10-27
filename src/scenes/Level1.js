@@ -81,7 +81,7 @@ export default class Level1 extends Phaser.Scene{
         this.impactoBar = this.sound.add('impactoBar');// sonido que se llama en Barra.js cuando detecta un impacto
         this.sound.stopAll();
         this.musicGame = this.sound.add('music');
-        this.musicGame.play({loop: true, volume: 0.5});
+        this.musicGame.play({loop: true, volume: 0.4});
     }
 
     update(){
