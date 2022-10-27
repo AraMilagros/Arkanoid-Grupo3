@@ -26,7 +26,7 @@ export default class Menu extends Phaser.Scene{
         this.add.image(450,150,'Menu').setScale(.3); //se agrega a la imagen y se modifica el tamaño
         this.lvl1Button.create();//Aqui se llama la funcion para mostrar el button1 en la escena
         this.lvl2Button2.create();//Aqui se llama la funcion para mostrar el button2 en la escena
-        this.lvl3Button3.create();
+        this.lvl3Button3.create();//Aqui se llama la funcion para mostrar el button3 en la escena
     }
 }
 

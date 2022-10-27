@@ -31,7 +31,7 @@ export class ButtonMenu{
             });
     
             this.start.on('pointerdown', ()=>{
-            //Recien cuando se detecte un click encima del button, volvera a cargar la escena del juego
+            //Recien cuando se detecte un click encima del button, volvera a cargar la escena del juego que corresponde al menu.
                 this.relatedScene.scene.start('Menu');
             });
 }

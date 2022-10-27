@@ -30,7 +30,7 @@ export class Button1 {
         });
 
         this.start.on('pointerdown', () => {
-            //Recien cuando se detecte un click encima del button, volvera a cargar la escena del juego
+            //Recien cuando se detecte un click encima del button, volvera a cargar la escena del Nivel1
             this.relatedScene.scene.start('Level1');
         });
     }

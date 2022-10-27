@@ -91,6 +91,7 @@ export default class Bloque extends Phaser.GameObjects.Sprite{
         // Como sonido está declarado e inicalizado en Principal, se utiliza scenePadre para acceder a la variable
         this.scenePadre.sonido.play();
     }
+    //este metodo devuelve la cantidad de bloques restantes para que una estructura if pueda pasar a la escena de victoria.
     countBlocks(){
         return this.bloque.countActive();
     }

@@ -110,6 +110,7 @@ export default class Level1 extends Phaser.Scene{
         this.scene.start('Winner');
         this.musicGame.stop();
     }
+    //Metodo que retorna la variable que contiene el nivel actual.
     levelDataRestart(){
         return this.nivelActual;
     }
