@@ -1,0 +1,17 @@
+.main{
+    display: flex;
+    justify-content: center;
+}
+.boton-jugar{
+    
+    width: 150px;
+    font-size: 20px;
+    border: 2px solid #435dcf;
+    background-color: #435dcf;
+    color: rgb(208, 227, 249);
+    padding: 1px;
+    border-radius: 10px;
+}
+.boton-jugar:hover{
+    background-color: #4156b3;
+}
