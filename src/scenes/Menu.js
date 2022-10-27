@@ -21,6 +21,7 @@ export default class Menu extends Phaser.Scene{
     }
 
     create(){
+        this.sound.stopAll(); //Detiene todo sonido que haya para que no se sobrepongan entre ellos
         this.musicMenu = this.sound.add('menuMusic');
         this.musicMenu.play({loop: true, volume: 0.5});
         this.add.image(450,150,'Menu').setScale(.3); //se agrega a la imagen y se modifica el tamaño
