@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import Phaser, { NONE } from "phaser";
 import Barra from '../gameObjects/Barra';
 import Ball from '../gameObjects/Ball';
 import Bloque from '../gameObjects/Bloque';
@@ -31,7 +31,7 @@ export default class Level3 extends Phaser.Scene{
 
     preload(){
         // se carga la imagen de fondo
-        this.load.image('Fondo','img/Desert.jpg')
+        this.load.image('Fondo','img/Desert.jpg');
         //se carga la imagen de barra
         this.load.image('barra', 'img/barra.png');
         //se carga la imagen de ball
@@ -110,7 +110,7 @@ export default class Level3 extends Phaser.Scene{
         this.musicGame.stop();
     }
      //Metodo que retorna la variable que contiene el nivel actual.
-    LevelDataRestart(){
-        return this.nivelActual;
-    }
+    // LevelDataRestart(){
+    //     return this.nivelActual;
+    // }
 }

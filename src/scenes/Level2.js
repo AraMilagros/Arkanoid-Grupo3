@@ -31,7 +31,7 @@ export default class Level2 extends Phaser.Scene{
 
     preload(){
         // se carga la imagen de fondo
-        this.load.image('Fondo','img/Galaxy.jpg')
+        this.load.image('Fondo','img/Galaxy.jpg');
         //se carga la imagen de barra
         this.load.image('barra', 'img/barra.png');
         //se carga la imagen de ball
@@ -109,7 +109,7 @@ export default class Level2 extends Phaser.Scene{
         this.musicGame.stop();
     }
      //Metodo que retorna la variable que contiene el nivel actual.
-    LevelDataRestart(){
-        return this.nivelActual;
-    }
+    // LevelDataRestart(){
+    //     return this.nivelActual;
+    // }
 }
