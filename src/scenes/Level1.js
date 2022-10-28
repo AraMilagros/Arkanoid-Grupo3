@@ -104,6 +104,7 @@ export default class Level1 extends Phaser.Scene{
         //Se llama la siguiente escena que muestra que se perdio
         this.scene.start('GameOver');
         this.musicGame.stop();
+        this.input;
     }
     winPlayer(){
         //se llama a la escena winner para indicar que gano
