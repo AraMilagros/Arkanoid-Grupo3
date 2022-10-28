@@ -31,7 +31,7 @@ export default class Level3 extends Phaser.Scene{
 
     preload(){
         // se carga la imagen de fondo
-        this.load.image('Fondo','img/Desert.jpg');
+        this.load.image('Fondo3','img/Desert.jpg');
         //se carga la imagen de barra
         this.load.image('barra', 'img/barra.png');
         //se carga la imagen de ball
@@ -50,12 +50,12 @@ export default class Level3 extends Phaser.Scene{
         //sonido
         this.load.audio('choque', ballBlockImpact);
         this.load.audio('impactoBar',ballBarImpact);
-        this.load.audio('music', gameMusic);
+        this.load.audio('music3', gameMusic);
     }
 
     create(){
         //Se agrega una imagen para fondo
-        this.add.image(450,300,'Fondo' );
+        this.add.image(450,300,'Fondo3' );
         //Esto permite que detecte las colisiones en los limites del lienzo, menos abajo
         // es decir que si la barra no alcanza la ball, éste desaparecera del lienzo
         this.physics.world.setBoundsCollision(true, true, true, false);
@@ -80,7 +80,7 @@ export default class Level3 extends Phaser.Scene{
         this.sonido = this.sound.add('choque');//Esto se llama en Bloque.js cuando se detecta un impacto
         this.impactoBar = this.sound.add('impactoBar');// sonido que se llama en Barra.js cuando detecta un impacto
         this.sound.stopAll();
-        this.musicGame = this.sound.add('music');
+        this.musicGame = this.sound.add('music3');
         this.musicGame.play({loop: true, volume: 0.4});
     }
 
